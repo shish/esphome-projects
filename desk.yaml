@@ -1,0 +1,28 @@
+esphome:
+  name: officedesk
+  platform: ESP32
+  board: m5stick-c
+
+wifi:
+  ssid: "Sloth Hotel"
+  password: "LookAtMyShelves"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Office Desk Fallback Hotspot"
+    password: "nGRLkAQzHbGw"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+switch:
+  - platform: gpio
+    name: "Office Desk Button"
+    pin: 5
