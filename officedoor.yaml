@@ -73,6 +73,14 @@ sensor:
     id: wifi_dbm
   - platform: uptime
     name: ${friendly_name} Uptime
+  # AXP192 power management - must be present to initialize TFT power on
+  - platform: axp192
+    address: 0x34
+    i2c_id: bus_a
+    update_interval: 30s
+    battery_level:
+      name: ${friendly_name} Battery Level
+      id: "${devicename}_batterylevel"
 
 
 #############################################################
@@ -155,12 +163,3 @@ light:
               duration: 100ms
             - state: False
               duration: 700ms
-
-## AXP192 power management - must be present to initialize TFT power on
-#  - platform: axp192
-#    address: 0x34
-#    i2c_id: bus_a
-#    update_interval: 30s
-#    battery_level:
-#      name: "M5Stick Battery Level"
-#      id: "m5stick_batterylevel"
