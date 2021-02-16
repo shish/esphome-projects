@@ -1,9 +1,3 @@
-########
-#
-# Use the version in ~/Projects!
-#
-########
-
 #############################################################
 # Generic ESPHome stuff
 
@@ -42,7 +36,7 @@ ota:
 
 
 #############################################################
-# M5Stick hardawre stuff
+# M5Stick hardware stuff
 
 output:
   - platform: ledc
@@ -72,6 +66,13 @@ time:
     id: homeassistant_time
   - platform: sntp
     id: sntp_time
+
+sensor:
+  - platform: wifi_signal
+    name: ${friendly_name} WiFi Signal
+    id: wifi_dbm
+  - platform: uptime
+    name: ${friendly_name} Uptime
 
 
 #############################################################
@@ -259,7 +260,6 @@ light:
               duration: 700ms
 
 ## AXP192 power management - must be present to initialize TFT power on
-#sensor:
 #  - platform: axp192
 #    address: 0x34
 #    i2c_id: bus_a
@@ -267,12 +267,6 @@ light:
 #    battery_level:
 #      name: "M5Stick Battery Level"
 #      id: "m5stick_batterylevel"
-#
-#  - platform: wifi_signal
-#    name: ${upper_devicename} WiFi Signal
-#    id: wifi_dbm
-#  - platform: uptime
-#    name: ${upper_devicename} Uptime
 
 #font:
 #  - file: 'arial.ttf'
