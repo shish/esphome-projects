@@ -160,7 +160,7 @@ text_sensor:
     name: Room State
     icon: mdi:office-building
     lambda: |-
-      if(id(state_val) == 0) return {"Break"};
+      if(id(state_val) == 0) return {"Rest"};
       if(id(state_val) == 1) return {"Work"};
       if(id(state_val) == 2) return {"Focus"};
       return {};
