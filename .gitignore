@@ -11,3 +11,4 @@
 .venv
 */
 custom_components
+*.ttf
