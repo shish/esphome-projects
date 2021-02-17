@@ -87,29 +87,24 @@ sensor:
 # Use-case specific code
 
 binary_sensor:
-  # HA will detect that this is pressed and set desk.request = on
+  # Nothing to do locally, other nodes will watch our state to
+  # react to presses
   - platform: gpio
     pin:
       number: GPIO37
       inverted: true
-    name: Button A
-#    on_press:
-#      then:
-#        - light.turn_on: led1
-#    on_release:
-#      then:
-#        - light.turn_off: led1
-  # No use for button B?
+    id: ${devicename}_button_a
+    name: ${friendly_name} Button A
   - platform: gpio
     pin:
       number: GPIO39
       inverted: true
-    name: Button B
+    id: ${devicename}_button_b
+    name: ${friendly_name} Button B
 
 text_sensor:
   - platform: homeassistant
     id: desk_state_monitor
-    # name: "Room State Monitor"
     entity_id: sensor.room_state
     on_value:
       then:
@@ -118,6 +113,13 @@ text_sensor:
             auto call = id(led1).turn_on();
             call.set_effect(x.c_str());
             call.perform();
+  - platform: homeassistant
+    id: request_attention_monitor
+    entity_id: switch.request_attention
+    on_value:
+      then:
+        - lambda: |-
+            ESP_LOGD("main", "Setting request to %s", x.c_str());
 
 light:
   - platform: monochromatic
@@ -163,3 +165,43 @@ light:
               duration: 100ms
             - state: False
               duration: 700ms
+
+font:
+  - file: 'helvetica.ttf'
+    id: font1
+    size: 8
+  - file: 'helvetica.ttf'
+    id: font2
+    size: 24
+  - file: 'helvetica.ttf'
+    id: font3
+    size: 14
+
+# builtin 80x160 TFT
+display:
+  - platform: st7735
+    cs_pin: GPIO5
+    dc_pin: GPIO23
+    reset_pin: GPIO18
+    rotation: 0
+    lambda: |-
+      auto width = 80;
+      auto height = 160;
+      it.print(width/2, 5, id(font1), ST77XX_WHITE, TextAlign::TOP_CENTER, "Office Status");
+      if (id(desk_state_monitor).has_state()) {
+        auto state_str = id(desk_state_monitor).state;
+        if(state_str == "Rest") {
+          it.print(width/2, 60, id(font2), ST77XX_GREEN, TextAlign::CENTER, "Break");
+        }
+        if(state_str == "Work") {
+          it.print(width/2, 60, id(font2), ST77XX_YELLOW, TextAlign::CENTER, "Work");
+        }
+        if(state_str == "Focus") {
+          it.print(width/2, 50, id(font2), ST77XX_RED, TextAlign::CENTER, "Do not");
+          it.print(width/2, 70, id(font2), ST77XX_RED, TextAlign::CENTER, "Disturb");
+        }
+      }
+      if (id(request_attention_monitor).has_state() && id(request_attention_monitor).state == "on") {
+          it.print(width/2, height-60, id(font2), ST77XX_YELLOW, TextAlign::CENTER, "Ringing");
+      }
+      it.strftime(width/2, height-5, id(font3), ST77XX_BLUE, TextAlign::BASELINE_CENTER, "%H:%M", id(sntp_time).now());

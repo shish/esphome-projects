@@ -185,14 +185,14 @@ text_sensor:
   - platform: version
     name: "ESPHome Version"
 
-
 binary_sensor:
   # Primary button acks the request if there is one; else changes room state
   - platform: gpio
     pin:
       number: GPIO37
       inverted: true
-    name: Button A
+    id: ${devicename}_button_a
+    name: ${friendly_name} Button A
     on_press:
       then:
         - if:
@@ -216,10 +216,23 @@ binary_sensor:
     pin:
       number: GPIO39
       inverted: true
-    name: Button B
+    id: ${devicename}_button_b
+    name: ${friendly_name} Button B
     on_press:
       then:
         - switch.toggle: request
+
+  # A virtual sensor which tracks the state of the door button
+  - platform: homeassistant
+    id: door_button_monitor
+    entity_id: binary_sensor.office_door_button_a
+    on_state:
+      then:
+        - lambda: |-
+            if(x == 1) {
+              id(request_val) = true;
+            }
+        - script.execute: update_world_based_on_state
 
 # internal LED
 light:
@@ -267,35 +280,39 @@ light:
             - state: False
               duration: 700ms
 
-#font:
-#  - file: 'arial.ttf'
-#    id: font1
-#    size: 8
-#
-#  - file: 'arial.ttf'
-#    id: font2
-#    size: 36
-#
-#  - file: 'arial.ttf'
-#    id: font3
-#    size: 14
+font:
+  - file: 'helvetica.ttf'
+    id: font1
+    size: 8
+  - file: 'helvetica.ttf'
+    id: font2
+    size: 24
+  - file: 'helvetica.ttf'
+    id: font3
+    size: 14
 
 # builtin 80x160 TFT
-#display:
-#  - platform: st7735
-#    cs_pin: GPIO5
-#    dc_pin: GPIO23
-#    reset_pin: GPIO18
-#    rotation: 270
-#    lambda: |-
-#      it.print(80, 0, id(font1), ST77XX_WHITE, TextAlign::TOP_CENTER, "M5Stick Test");
-#      if (id(wifi_dbm).has_state()) {
-#        char str[128];
-#        sprintf(str, "%.0f dBm", id(wifi_dbm).state);
-#        it.print(80, 40, id(font2), ST77XX_RED, TextAlign::CENTER, str);
-#        //it.print(80, 40, id(font2), ST77XX_RED, TextAlign::CENTER,  "%.0f dBm", id(wifi_dbm).state);
-#      } else {
-#        it.print(80, 40, id(font2), ST77XX_RED, TextAlign::CENTER, "No Wifi");
-#      }
-#      // Print time in HH:MM format
-#      it.strftime(80, 60, id(font3), ST77XX_BLUE, TextAlign::TOP_CENTER, "%H:%M", id(sntp_time).now());
+display:
+  - platform: st7735
+    cs_pin: GPIO5
+    dc_pin: GPIO23
+    reset_pin: GPIO18
+    rotation: 270
+    lambda: |-
+      auto width = 160;
+      auto height = 80;
+      it.print(width/2, 5, id(font1), ST77XX_WHITE, TextAlign::TOP_CENTER, "Office Status");
+      if (id(state).has_state()) {
+        auto state_str = id(state).state;
+        if(state_str == "Rest") {
+          it.print(width/2, height/2, id(font2), ST77XX_GREEN, TextAlign::CENTER, "Break");
+        }
+        if(state_str == "Work") {
+          it.print(width/2, height/2, id(font2), ST77XX_YELLOW, TextAlign::CENTER, "Work");
+        }
+        if(state_str == "Focus") {
+          it.print(width/2, height/2-10, id(font2), ST77XX_RED, TextAlign::CENTER, "Do not");
+          it.print(width/2, height/2+10, id(font2), ST77XX_RED, TextAlign::CENTER, "Disturb");
+        }
+      }
+      it.strftime(width/2, height-5, id(font3), ST77XX_BLUE, TextAlign::BASELINE_CENTER, "%H:%M", id(sntp_time).now());
