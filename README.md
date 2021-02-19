@@ -52,6 +52,15 @@ The "desk" also has virtual sensor monitoring the door's button,
 which it uses to trigger the `request = true` state.
 
 
+The Result
+----------
+![Door - Far](./.github/images/door-far.jpg?raw=true)
+![Door - Close](./.github/images/door-close.jpg?raw=true)
+
+![Desk - Far](./.github/images/desk-far.jpg?raw=true)
+![Desk - Close](./.github/images/desk-close.jpg?raw=true)
+
+
 Build & Run
 -----------
 Get the code
