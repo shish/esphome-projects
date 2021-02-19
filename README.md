@@ -1,4 +1,4 @@
 ESPHome Projects
 ================
 
-* [Visual Doorbell](./visual-doorbell.md)
+* [Office Doorbell](./office-doorbell.md)
