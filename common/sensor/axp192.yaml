@@ -1,0 +1,9 @@
+# AXP192 power management - must be present to initialize TFT power on
+# for M5Stick-C
+platform: axp192
+address: 0x34
+i2c_id: bus_a
+update_interval: 30s
+battery_level:
+  name: ${friendly_name} Battery Level
+  id: "${devicename}_batterylevel"

@@ -1,0 +1,7 @@
+# # M5Stick-C internal IR Transmitter
+# remote_transmitter:
+#   - !include common/m5-ir.yaml
+pin:
+  number: GPIO9
+carrier_duty_percent: 50%
+id: internal

@@ -38,49 +38,23 @@ ota:
 #############################################################
 # M5Stick hardware stuff
 
-output:
-  - platform: ledc
-    pin: 10
-    inverted: true
-    id: builtin_led
-
-# internal IR Transmitter
-remote_transmitter:
-  - pin:
-      number: GPIO9
-    carrier_duty_percent: 50%
-    id: internal
-
 spi:
-  clk_pin: GPIO13
-  mosi_pin: GPIO15
+  !include common/m5-spi.yaml
+
+output:
+  - !include common/m5-led.yaml
 
 i2c:
-   - id: bus_a
-     sda: GPIO21
-     scl: GPIO22
-     scan: True
+   - !include common/m5-i2c.yaml
 
 time:
-  - platform: homeassistant
-    id: homeassistant_time
-  - platform: sntp
-    id: sntp_time
+  - !include common/time/homeassistant.yaml
+  - !include common/time/sntp.yaml
 
 sensor:
-  - platform: wifi_signal
-    name: ${friendly_name} WiFi Signal
-    id: wifi_dbm
-  - platform: uptime
-    name: ${friendly_name} Uptime
-  # AXP192 power management - must be present to initialize TFT power on
-  - platform: axp192
-    address: 0x34
-    i2c_id: bus_a
-    update_interval: 30s
-    battery_level:
-      name: ${friendly_name} Battery Level
-      id: "${devicename}_batterylevel"
+  - !include common/sensor/wifi_signal.yaml
+  - !include common/sensor/uptime.yaml
+  - !include common/sensor/axp192.yaml
 
 
 #############################################################

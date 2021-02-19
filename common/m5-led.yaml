@@ -1,0 +1,4 @@
+platform: ledc
+pin: 10
+inverted: true
+id: builtin_led
