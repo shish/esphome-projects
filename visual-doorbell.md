@@ -61,6 +61,12 @@ The Result
 ![Desk - Close](./.github/images/desk-close.jpg?raw=true)
 
 
+Browse the Code
+---------------
+* [Office Desk](./officedesk.yaml)
+* [Office Door](./officedoor.yaml)
+
+
 Build & Run
 -----------
 Get the code
