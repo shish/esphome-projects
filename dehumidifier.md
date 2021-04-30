@@ -74,12 +74,12 @@ Now that I can insert a breadboard in between the hardware and the control panel
 
 Multimeter readings for each control line in each state:
 
-State | +5V | GND | R   | G   | B   | OUT | HR
-------|-----|-----|-----|-----|-----|-----|-----
-Off   | 5.0 | -   | 5.0 | 5.0 | 5.0 | 4.8 | 5.0
-Motor | 5.0 | -   | 4.9 | 4.9 | 4.9 | 0   | 5.0
-M/Grn | 4.7 | -   | 2.0 | 4.3 | 4.7 | 0   | 4.7
-M/Yel | 4.5 | -   | 2.1 | 2.4 | 4.5 | 0   | 4.5
+State          | +5V | GND | R   | G   | B   | OUT | HR
+---------------|-----|-----|-----|-----|-----|-----|-----
+Off            | 5.0 | -   | 5.0 | 5.0 | 5.0 | 4.8 | 5.0
+Motor          | 5.0 | -   | 4.9 | 4.9 | 4.9 | 0   | 5.0
+Motor + Green  | 4.7 | -   | 2.0 | 4.3 | 4.7 | 0   | 4.7
+Motor + Yellow | 4.5 | -   | 2.1 | 2.4 | 4.5 | 0   | 4.5
 
 The "R" pin is connected to the Green LED; the "G" pin is connected to the Red LED; and the "B" pin is connected to the Blue LED.
 
