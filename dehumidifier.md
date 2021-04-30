@@ -36,12 +36,14 @@ Quick Investigation
   take it apart, and ended up taking it apart too much, by force, breaking
   the plastic a little bit. It turns out that I could've just removed the
   circular top panel by itself, and that's all that I actually needed to do.
-  ![Broken Open](./.github/images/dehumidifier/break-open.jpg?raw=true)
+
+![Broken Open](./.github/images/dehumidifier/break-open.jpg?raw=true)
 - With the top panel removed, we can see that there isn't actually an on/off
   switch... there's a capacitive touch sensor connected to a microcontroller
   which cotrols the motor and the LEDs, so we'll need to either work with
   that or replace it completely :/
-  ![Control Panel](./.github/images/dehumidifier/control-panel.jpg?raw=true)
+
+![Control Panel](./.github/images/dehumidifier/control-panel.jpg?raw=true)
 - On the plus side: this default control panel runs at 5V while all the
   mechanical parts run at 9V. The relay board we use expects 5V control input
   (not sure why - the ESP is a 3.3V chip, maybe the relay itself needs 5V?),
@@ -49,7 +51,8 @@ Quick Investigation
 - As a quick hack based on a hunch, I jammed some jumper wire in there to
   connect the "OUT" and "GND" pins - it started running, overriding the
   control panel \o/
-  ![Jump to GND](./.github/images/dehumidifier/jump-to-gnd.jpg?raw=true)
+
+![Jump to GND](./.github/images/dehumidifier/jump-to-gnd.jpg?raw=true)
 - Interestingly, with the control panel disconnected completely, it starts
   running by default - so it seems like the control panel needs to be present
   and sending signal down the OUT pin in order for it to turn _off_??
