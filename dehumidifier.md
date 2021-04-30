@@ -82,6 +82,9 @@ The "R" pin is connected to the Green LED; the "G" pin is connected to the Red L
 
 Extra things which show up with an oscilloscope:
 
+![Scope 1](./.github/images/dehumidifier/scope1.jpg?raw=true)
+![Scope 2](./.github/images/dehumidifier/scope2.jpg?raw=true)
+
 - R/G/B LEDs are pulse-width-controlled, not voltage-controlled.
 - 3.96kHz, ~4V high, ~0V low
 - The "R" pin cycles 0-55-0% every ~100s
@@ -95,6 +98,8 @@ Custom Controller, v1
 - The Hardware
   - [ESP-01S](https://www.aliexpress.com/item/32821697306.html?spm=a2g0s.9042311.0.0.27424c4dKBLXth)
   - [ESP-01 Relay Board](https://www.aliexpress.com/item/32821697306.html?spm=a2g0s.9042311.0.0.27424c4dKBLXth)
+
+![ESP01](./.github/images/dehumidifier/esp01.jpg?raw=true)
 - Plugging in the relay board to the 5V and GND pins, it doesn't boot :(
   - Measuring 5V-GND just on the pins, it shows up as 5V
     - For reference, 5V-GND on my test breadboard shows 5.1V
@@ -125,9 +130,9 @@ Custom Controller, v2
 Custom Controller, v3
 ---------------------
 - The Hardware
-  - [Wemos D1 Mini]()
-  - [D1 Power Sheild]()
-  - [DC Power Barrel]()
+  - [Wemos D1 Mini](aliexpress)
+  - [D1 Power Sheild](aliexpress)
+  - [DC Power Barrel](amazon)
 - OK so I don't know electronics well enough to be sure, but it definitely
   looks like there's some kind of hard limit on how much power the built-in
   power supply can push. What if instead of taking power out of the unit,
@@ -138,6 +143,21 @@ Custom Controller, v3
   outputs for 3.3V, 5V, and VIN. Perhaps we can plug the mains (9V adapter)
   into this board, use 3.3V for ourselves, 5V to control the hardware, and
   forward the 9V back outside and into the regular power input?
+  - Seems to work, but a challenge: the power barrels I bought are too big for the unit's in-set power socket :|
+    - Solution: craft knife \o/
+
+![Power 1](./.github/images/dehumidifier/power1.jpg?raw=true)
+![Power 2](./.github/images/dehumidifier/power2.jpg?raw=true)
+![Power 3](./.github/images/dehumidifier/power3.jpg?raw=true)
+![Power 4](./.github/images/dehumidifier/power4.jpg?raw=true)
+
+Current Status
+--------------
+Not quite working \o/
+
+- We take power by splitting the input from the power adapter into two, so that both our control panel and the dehumidifier itself share the 9V input
+- The ESP chip boots
+- We can control the LEDs by putting a transistor between the 5V R/G/B pins and GND, then using the ESP to send 3.3V signals to the transistors
 
 Build & Run
 -----------
@@ -169,10 +189,6 @@ the first time, can be updated over wifi later times)
 
 Future Work
 -----------
-Connect an ESP chip with a relay and a DHT11 to measure humidity at the
-same time, no need for an external humidity monitor. This is slightly
-tricky because the nice self-contained ESP-01 board is designed to work
-with one single accessory at a time, so we can have the relay OR the
-humidity sensor. For multiple accessories, I think we need to use a
-different ESP8266-based board (D1 mini? NodeMCU? Bare ESP8266 with custom
-electronics?)
+- Add a DHT11 sensor (or similar) to the control panel so that we can detect humidity for ourselves, and automatically turn on in a self-contained way.
+- I notice that the fan sounds like it's going slower when I use a DC extension cable. The multimeter still shows 9V though. Is this extension cable limiting current?
+  - Since I now control the power going to the main board, could I add a boost converter in between the control panel and main board and overclock it with something more than 9V?
