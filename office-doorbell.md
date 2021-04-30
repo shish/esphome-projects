@@ -54,11 +54,11 @@ which it uses to trigger the `request = true` state.
 
 The Result
 ----------
-![Door - Far](./.github/images/door-far.jpg?raw=true)
-![Door - Close](./.github/images/door-close.jpg?raw=true)
+![Door - Far](./.github/images/doorbell/door-far.jpg?raw=true)
+![Door - Close](./.github/images/doorbell/door-close.jpg?raw=true)
 
-![Desk - Far](./.github/images/desk-far.jpg?raw=true)
-![Desk - Close](./.github/images/desk-close.jpg?raw=true)
+![Desk - Far](./.github/images/doorbell/desk-far.jpg?raw=true)
+![Desk - Close](./.github/images/doorbell/desk-close.jpg?raw=true)
 
 
 Browse the Code
@@ -84,8 +84,7 @@ ln -s esphome-m5stickC/components custom_components
 Install ESPHome
 ```
 python3 -m venv .venv
-./.venv/bin/pip install esphome
-./.venv/bin/pip install pillow
+./.venv/bin/pip install esphome pillow
 ```
 
 Populate `secrets.yaml`
@@ -104,6 +103,7 @@ be updated over wifi later times)
 ./.venv/bin/esphome officedesk.yaml run
 ./.venv/bin/esphome officedoor.yaml run
 ```
+
 
 Future Work
 -----------

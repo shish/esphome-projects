@@ -13,3 +13,4 @@
 custom_components
 *.ttf
 !common/
+!github/
