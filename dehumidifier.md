@@ -27,7 +27,7 @@ The Hardware
 
 The Software
 ------------
-- [ESPHome Config File](dehumidifier_d1mini.yaml)
+- [ESPHome Config File](dehumidifier.yaml)
 
 
 Quick Investigation
@@ -133,9 +133,9 @@ Custom Controller, v2
 Custom Controller, v3
 ---------------------
 - The Hardware
-  - [Wemos D1 Mini](aliexpress)
-  - [D1 Power Sheild](aliexpress)
-  - [DC Power Barrel](amazon)
+  - [Wemos D1 Mini](https://www.wemos.cc/en/latest/d1/d1_mini.html)
+  - [D1 Power Sheild](https://www.wemos.cc/en/latest/d1_mini_shield/dc_power.html)
+  - [DC Power Barrel](https://smile.amazon.co.uk/gp/product/B077YGV3F4/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1)
 - OK so I don't know electronics well enough to be sure, but it definitely
   looks like there's some kind of hard limit on how much power the built-in
   power supply can push. What if instead of taking power out of the unit,
