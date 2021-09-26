@@ -27,7 +27,7 @@ The Hardware
 
 The Software
 ------------
-- [ESPHome Config File](dehumidifier.yaml)
+- [ESPHome Config File](dehumidifier_d1mini.yaml)
 
 
 Quick Investigation
@@ -154,13 +154,35 @@ Custom Controller, v3
 ![Power 3](./.github/images/dehumidifier/power3.jpg?raw=true)
 ![Power 4](./.github/images/dehumidifier/power4.jpg?raw=true)
 
-Current Status
---------------
-Not quite working \o/
+Analog Detour
+-------------
+All these circuits seem to be working inconsistently, so I want to try creating the smallest possible working circuit to make sure each individual part works.
 
-- We take power by splitting the input from the power adapter into two, so that both our control panel and the dehumidifier itself share the 9V input
-- The ESP chip boots
-- We can control the LEDs by putting a transistor between the 5V R/G/B pins and GND, then using the ESP to send 3.3V signals to the transistors
+![Analog 1](./.github/images/dehumidifier/analog1.jpg?raw=true)
+![Analog 2](./.github/images/dehumidifier/analog2.png?raw=true)
+
+I'm not sure what I did differently this time (maybe the position of the resistor??) but everything appears to work reliably now.
+
+The two wires on the side of the ribbon cable are just there to make sure the ribbon is inserted in the correct position, as I don't want an off-by-one to end up frying my parts :)
+
+Putting it all Together
+-----------------------
+Now with everything working, I try to get it all into a single package on a D1 Mini Duo base.
+
+
+![Together 1](./.github/images/dehumidifier/together1.png?raw=true)
+![Together 2](./.github/images/dehumidifier/together2.png?raw=true)
+![Together 3](./.github/images/dehumidifier/together3.jpg?raw=true)
+![Together 4](./.github/images/dehumidifier/together4.jpg?raw=true)
+
+Soldering this all together on a mini board was a huge pain in the ass.
+
+On the plus side, I learned that ESPHome allows you to combine three R/G/B pins into a single RGB light.
+
+![Finished 1](./.github/images/dehumidifier/finished1.jpg?raw=true)
+![Finished 2](./.github/images/dehumidifier/finished2.png?raw=true)
+
+Ideally I'd also add a case to protect the electronics from getting splashed, but I don't have access to a 3D printer or laser cutter...
 
 Build & Run
 -----------
@@ -192,6 +214,8 @@ the first time, can be updated over wifi later times)
 
 Future Work
 -----------
+- Add some effects to the software config (blink, rainbow, etc)
 - Add a DHT11 sensor (or similar) to the control panel so that we can detect humidity for ourselves, and automatically turn on in a self-contained way.
+- Have the light mean something (maybe map the spectrum onto the humidity levels?)
+- Figure out why the dehumidifier's 5V rail is not sufficient to power the D1 mini via the 5V pin
 - I notice that the fan sounds like it's going slower when I use a DC extension cable. The multimeter still shows 9V though. Is this extension cable limiting current?
-  - Since I now control the power going to the main board, could I add a boost converter in between the control panel and main board and overclock it with something more than 9V?

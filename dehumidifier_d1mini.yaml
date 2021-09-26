@@ -42,22 +42,30 @@ ota:
 
 switch:
   - platform: gpio
-    name: Green
-    id: pin_g
-    pin: D7
-  - platform: gpio
-    name: Red
-    id: pin_r
-    pin: D6
-  - platform: gpio
-    name: Blue
-    id: pin_b
-    pin: D5
-  - platform: gpio
-    name: Out
+    name: "${friendly_name} Fan"
     id: pin_out
     pin: D0
     inverted: true
+
+output:
+  - platform: esp8266_pwm
+    pin: D7
+    frequency: 1000 Hz
+    id: pin_g
+  - platform: esp8266_pwm
+    pin: D6
+    frequency: 1000 Hz
+    id: pin_r
+  - platform: esp8266_pwm
+    pin: D5
+    frequency: 1000 Hz
+    id: pin_b
+light:
+  - platform: rgb
+    name: "${friendly_name} RGB"
+    red: pin_r
+    green: pin_g
+    blue: pin_b
 
 i2c:
 
