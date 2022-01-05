@@ -151,31 +151,65 @@ font:
     id: font3
     size: 14
 
+color:
+  - id: color_bg
+    red: 100%
+    green: 100%
+    blue: 100%
+  - id: color_title
+    red: 100%
+    green: 100%
+    blue: 100%
+  - id: color_rest
+    red: 0%
+    green: 100%
+    blue: 0%
+  - id: color_work
+    red: 100%
+    green: 100%
+    blue: 0%
+  - id: color_focus
+    red: 100%
+    green: 0%
+    blue: 0%
+  - id: color_time
+    red: 0%
+    green: 0%
+    blue: 100%
+
 # builtin 80x160 TFT
 display:
   - platform: st7735
+    model: INITR_MINI160X80
     cs_pin: GPIO5
     dc_pin: GPIO23
+    device_width: 80
+    device_height: 160
+    col_start: 0
+    row_start: 0
     reset_pin: GPIO18
     rotation: 0
+    invert_colors: true
+    use_bgr: true
     lambda: |-
       auto width = 80;
       auto height = 160;
-      it.print(width/2, 5, id(font1), ST77XX_WHITE, TextAlign::TOP_CENTER, "Office Status");
+      it.fill(COLOR_OFF);
+      it.print(width/2, 5, id(font1), id(color_title), TextAlign::TOP_CENTER, "Office Status");
       if (id(desk_state_monitor).has_state()) {
         auto state_str = id(desk_state_monitor).state;
         if(state_str == "Rest") {
-          it.print(width/2, 60, id(font2), ST77XX_GREEN, TextAlign::CENTER, "Break");
+          it.print(width/2, 60, id(font2), id(color_rest), TextAlign::CENTER, "Break");
         }
         if(state_str == "Work") {
-          it.print(width/2, 60, id(font2), ST77XX_YELLOW, TextAlign::CENTER, "Work");
+          it.print(width/2, 60, id(font2), id(color_work), TextAlign::CENTER, "Work");
         }
         if(state_str == "Focus") {
-          it.print(width/2, 50, id(font2), ST77XX_RED, TextAlign::CENTER, "Do not");
-          it.print(width/2, 70, id(font2), ST77XX_RED, TextAlign::CENTER, "Disturb");
+          it.print(width/2, 50, id(font2), id(color_focus), TextAlign::CENTER, "Do not");
+          it.print(width/2, 70, id(font2), id(color_focus), TextAlign::CENTER, "Disturb");
         }
       }
       if (id(request_attention_monitor).has_state() && id(request_attention_monitor).state == "on") {
-          it.print(width/2, height-60, id(font2), ST77XX_YELLOW, TextAlign::CENTER, "Ringing");
+          it.print(width/2, height-60, id(font2), id(color_work), TextAlign::CENTER, "Ringing");
       }
-      it.strftime(width/2, height-5, id(font3), ST77XX_BLUE, TextAlign::BASELINE_CENTER, "%H:%M", id(sntp_time).now());
+      it.strftime(width/2, height-5, id(font3), id(color_time), TextAlign::BASELINE_CENTER, "%H:%M", id(sntp_time).now());

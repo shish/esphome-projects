@@ -78,7 +78,8 @@ cd esphome-projects
 Get the M5StickC components for ESPHome
 ```
 git clone https://github.com/airy10/esphome-m5stickC
-ln -s esphome-m5stickC/components custom_components
+mkdir -p custom_components
+ln -s esphome-m5stickC/components/axp192 custom_components/axp192
 ```
 
 Install ESPHome
