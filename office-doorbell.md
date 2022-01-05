@@ -100,8 +100,8 @@ helvetica.ttf, but any should work)
 Build / install / run (with m5stick connected via USB the first time, can
 be updated over wifi later times)
 ```
-./.venv/bin/esphome officedesk.yaml run
-./.venv/bin/esphome officedoor.yaml run
+./.venv/bin/esphome run officedesk.yaml
+./.venv/bin/esphome run officedoor.yaml
 ```
 
 

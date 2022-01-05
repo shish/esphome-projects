@@ -208,7 +208,7 @@ backup_ap_password: "jhgasdfvstr"
 Build / install / run (with the ESP-01 board connected to the flashing dongle
 the first time, can be updated over wifi later times)
 ```
-./.venv/bin/esphome dehumidifier.yaml run
+./.venv/bin/esphome run dehumidifier.yaml
 ```
 
 
