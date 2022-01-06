@@ -38,6 +38,9 @@ ota:
 #############################################################
 # M5Stick hardware stuff
 
+external_components:
+  !include common/m5-external.yaml
+
 spi:
   !include common/m5-spi.yaml
 
