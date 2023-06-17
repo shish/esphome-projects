@@ -1,0 +1,2 @@
+source: github://airy10/esphome-m5stickC
+components: [axp192]
